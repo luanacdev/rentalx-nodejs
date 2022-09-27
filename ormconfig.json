@@ -1,8 +1,12 @@
 {
-    "type": "postgres",
-    "port": 5432,
-    "host": "localhost",
-    "username": "postgres",
-    "password": "senha123",
-    "database": "rentalxdb"
+  "type": "postgres",
+  "port": 5432,
+  "host": "localhost",
+  "username": "luanadev",
+  "password": "182077lsc",
+  "database": "rentalxdb",
+  "migrations": ["./src/database/migrations/*.ts"],
+  "cli": {
+    "migrationsDir": "./src/database/migrations"
   }
+}
