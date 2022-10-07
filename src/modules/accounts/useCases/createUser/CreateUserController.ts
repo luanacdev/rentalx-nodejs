@@ -1,28 +1,22 @@
-import { inject } from "tsyringe";
-import { ICreateUserDTO } from "../../dtos/ICreateUserDTO";
-import { IUsersRepository } from "../../repositories/IUsersRepository";
-
-class CreateUserUseCase {
-    constructor(
-        @inject("UsersRepository")
-        private usersRepository: IUsersRepository
-    ){}
-
-    async execute({
-        name, 
-        username, 
-        email, 
-        driver_license, 
-        password
-    }: ICreateUserDTO): Promise<void> {
-        await this.usersRepository.create({
+import { Request, Response } from 'express';
+import { CreateUserUseCase } from "./CreateUserUseCase"
+import { container } from "tsyringe"
+class CreateUserController {
+    async  handle(request: Request, response: Response): Promise<Response> {
+        const { name, username, email, password, driver_license } = request.body;
+        
+        const createUserUseCase = container.resolve(CreateUserUseCase);
+        
+        await createUserUseCase.execute({
             name, 
             username, 
             email, 
-            driver_license, 
-            password
+            password, 
+            driver_license 
         });
+
+        return response.status(201).send();
     }
 }
 
-export { CreateUserUseCase }
+export { CreateUserController }
