@@ -46,4 +46,18 @@ describe("Create Car", () => {
             })
         }).rejects.toBeInstanceOf(AppError)
     })
+
+    it("should not be able to create a car with available true by default", async () => {
+        const car =  await createCarUseCase.execute({
+            name: "Car available",
+            description: "Description Car",
+            daily_rate: 100,
+            license_plate: "ABV-222",
+            fine_amount: 100,
+            brand: "Ban",
+            category_id: "categories"
+        })
+
+        expect(car.available).toBe(true);
+    })
 });
